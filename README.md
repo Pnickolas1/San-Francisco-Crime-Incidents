@@ -1,7 +1,50 @@
 # San-Francisco-Crime-Incidents
 Statistical analyses SF crime data using Apache Spark Structured Streaming
 
+After downloading and installing the dependencies described above, first extract the data in the data/data.zip file and then run the following commands:
 
+1. Start Zookeeper and Kafka
+```
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+```
+
+The `config` directory includes configuration files for both Zookeeper and Kafka.
+
+2. Start the producer server which will read JSON data and write to a Kafka topic:
+```
+python kafka_server.py
+```
+
+3. Start the consumer server which will read JSON data from the Kafka topic and display it in the console:
+```
+python consumer_server.py
+```
+
+This consumer will provide output as show in the screenshot below.
+![Consumer server output](./screenshots/consumer_server.png)
+
+4. Start Apache Spark Structured Streaming consumer:
+```
+spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.3.4 --master local[*] data_stream.py
+```
+
+
+The `config` includes the configuration file for Spark.
+
+The Spark consumer will write data produced by two queries to the console.
+
+The progress report for both queries in shown below.
+
+![Query 1 - Progress Report](screenshots/progress_report_query_1.png)
+
+![Query 2 - Progress Report](screenshots/progress_report_query_2.png)
+
+While tables with aggregated crime data are printed to the console as shown below.
+
+![Query 1 - Aggregation query](screenshots/agg_query.png)
+
+![Query 2 - Join query](screenshots/join_query.png)
 
 
 

@@ -258,3 +258,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+./sf-crime-data/*
